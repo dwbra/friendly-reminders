@@ -34,6 +34,6 @@ export async function POST(request) {
   };
 
   const tokens = await tokenFetch();
-  console.log(tokens);
+  //   console.log(tokens);
   return NextResponse.json(tokens);
 }
