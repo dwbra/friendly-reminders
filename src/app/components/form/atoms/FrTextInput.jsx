@@ -17,7 +17,7 @@ const FrTextInput = ({ label, ...props }) => {
         label={label}
         value={field.value}
         error={meta.touched && Boolean(meta.error)}
-        helperText={meta.touched && meta.error ? <div className="error">{meta.error}</div> : null}
+        helperText={meta.touched && meta.error ? <span className="error">{meta.error}</span> : null}
         {...field}
         {...props}
       />
