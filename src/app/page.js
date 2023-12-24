@@ -1,11 +1,10 @@
-// import Image from 'next/image';
-import styles from './page.module.css';
-import AuthButton from './components/AuthButton';
+import styles from './page.module.scss';
+import Home from './components/Home';
 
-export default function Home() {
+export default function Render() {
   return (
     <main className={styles.main}>
-      <AuthButton />
+      <Home />
     </main>
   );
 }

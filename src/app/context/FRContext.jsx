@@ -6,8 +6,8 @@ const FRContext = createContext(null);
 
 const FRProvider = ({ children }) => {
   const [tokens, updateTokens] = useState({
-    accessToken: '',
-    refreshToken: '',
+    accessToken: null,
+    refreshToken: null,
   });
 
   return <FRContext.Provider value={[tokens, updateTokens]}>{children}</FRContext.Provider>;
