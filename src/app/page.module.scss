@@ -9,5 +9,12 @@
 .fr {
   &Form {
     margin-top: 50px;
+
+    &TextInput {
+      margin: 10px 0 !important;
+    }
+
+    // &Switch {
+    // }
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import AuthButton from './AuthButton';
-import GoogleCalendarForm from './GoogleCalendarForm';
+import GoogleCalendarForm from './form/organisms/GoogleCalendarForm';
 import { useTokens } from '../context/FRContext';
 
 const Home = () => {
