@@ -22,6 +22,7 @@ const CalendarId = ({ values }) => {
       </div>
       {calendarIdChecked && (
         <FrTextInput
+          className={styles.frFormTextInput}
           disabled={!calendarIdChecked}
           id="calendarId"
           name="calendarId"

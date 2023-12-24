@@ -8,6 +8,7 @@
 
 .fr {
   &Form {
+    width: 100%;
     margin-top: 50px;
 
     &TextInput {
@@ -16,5 +17,21 @@
 
     // &Switch {
     // }
+
+    &Date {
+      @media only screen and (min-width: 1240px) {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+
+        // div {
+        //   flex: 1;
+        // }
+      }
+    }
+
+    &Select {
+      margin: 10px 0;
+    }
   }
 }

@@ -11,7 +11,7 @@ const FrTextInput = ({ label, ...props }) => {
   return (
     <>
       <TextField
-        className={styles.frFormTextInput}
+        className={props.className}
         id={props.id}
         name={props.name}
         label={label}
