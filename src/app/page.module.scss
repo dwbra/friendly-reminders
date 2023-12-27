@@ -22,11 +22,12 @@
       @media only screen and (min-width: 1240px) {
         display: flex;
         flex-direction: row;
+        align-items: baseline;
         gap: 20px;
 
-        // div {
-        //   flex: 1;
-        // }
+        div {
+          flex: 1;
+        }
       }
     }
 
