@@ -3,7 +3,17 @@ import styles from '../../../page.module.scss';
 import FrTextInput from '../atoms/FrTextInput';
 import FrSelectInput from '../atoms/FrSelectInput';
 
-const DateInput = ({ values }) => {
+const DateInput = ({
+  inputOneId,
+  inputOneLabel,
+  inputOneValue,
+  inputTwoId,
+  inputTwoLabel,
+  inputTwoValue,
+  selectId,
+  selectLabel,
+  selectValue,
+}) => {
   const [timeZones, setTimeZones] = useState([]);
   useEffect(() => {
     const getTimeZones = async () => {
@@ -27,23 +37,23 @@ const DateInput = ({ values }) => {
     <div className={styles.frFormDate}>
       <FrTextInput
         className={styles.frFormTextInput}
-        id="eventStartDate"
-        name="eventStartDate"
-        label="Start Date"
-        value={values.eventStartDate}
+        id={inputOneId}
+        name={inputOneId}
+        label={inputOneLabel}
+        value={inputOneValue}
       />
       <FrTextInput
         className={styles.frFormTextInput}
-        id="eventStartTime"
-        name="eventStartTime"
-        label="Start Time"
-        value={values.eventStartTime}
+        id={inputTwoId}
+        name={inputTwoId}
+        label={inputTwoLabel}
+        value={inputTwoValue}
       />
       <FrSelectInput
-        name="eventStartTimeZone"
-        id="eventStartTimeZone"
-        label="Start Time Zone"
-        value={values.eventStartTimeZone}
+        name={selectId}
+        id={selectId}
+        label={selectLabel}
+        value={selectValue}
         fullWidth
         data={timeZones}
         className={styles.frFormSelect}

@@ -1,29 +1,31 @@
 import { useField } from 'formik';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
 
 const FrSelectInput = ({ data, label, ...props }) => {
-  const [field] = useField(props);
+  const [field, meta] = useField(props);
   return (
     <>
-      <FormControl fullWidth>
-        <InputLabel className={props.className} id={props.id}>
-          {label}
-        </InputLabel>
-        <Select labelId={props.id} value={field.value} id={props.id} label={label} {...field} {...props}>
-          {data.length > 0
-            ? data.map((item, index) => {
-                return (
-                  <MenuItem key={`${index}/${item}`} value={item}>
-                    {item}
-                  </MenuItem>
-                );
-              })
-            : null}
-        </Select>
-      </FormControl>
+      <TextField
+        className={props.className}
+        id={props.id}
+        select
+        label={label}
+        error={meta.touched && Boolean(meta.error)}
+        helperText={meta.touched && meta.error ? <span className="error">{meta.error}</span> : null}
+        {...field}
+        {...props}
+      >
+        {data.length > 0
+          ? data.map((item, index) => {
+              return (
+                <MenuItem key={`${index}/${item}`} value={item.toLowerCase()}>
+                  {item}
+                </MenuItem>
+              );
+            })
+          : null}
+      </TextField>
     </>
   );
 };

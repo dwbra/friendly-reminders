@@ -8,6 +8,10 @@
 
 .fr {
   &Form {
+    h1 {
+      margin: 10px 0;
+    }
+
     width: 100%;
     margin-top: 50px;
 
@@ -31,8 +35,18 @@
       }
     }
 
-    &Select {
-      margin: 10px 0;
+    // &Select {
+    // }
+
+    &Reminders {
+      div {
+        display: flex;
+        gap: 20px;
+
+        div {
+          display: block;
+        }
+      }
     }
   }
 }

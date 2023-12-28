@@ -1,7 +1,6 @@
 import React from 'react';
 import { useField } from 'formik';
 import TextField from '@mui/material/TextField';
-import styles from '../../../page.module.scss';
 
 const FrTextInput = ({ label, ...props }) => {
   // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
