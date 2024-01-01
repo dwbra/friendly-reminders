@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from '../../../page.module.scss';
-import FrTextInput from '../atoms/FrTextInput';
-import FrSelectInput from '../atoms/FrSelectInput';
+import FrTextInput from './FrTextInput';
+import FrSelectInput from './FrSelectInput';
 
 const DateInput = ({
   inputOneId,

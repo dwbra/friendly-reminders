@@ -6,7 +6,8 @@ import * as Yup from 'yup';
 import Button from '@mui/material/Button';
 import FrTextInput from '../atoms/FrTextInput';
 import CalendarId from '../molecules/CalendarId';
-import DateInput from '../molecules/DateInput';
+import Dates from '../molecules/Dates';
+
 import Reminders from '../molecules/Reminders';
 
 const googleFormValidationSchema = Yup.object({
@@ -26,47 +27,69 @@ const googleFormValidationSchema = Yup.object({
     is: true,
     then: () => Yup.string().required('This is a required field. Please enter a value between 0 and 40320 in minutes.'),
   }),
+  dateSelector: Yup.string().required('This is a required field.'),
   eventStartDate: Yup.string()
-    .matches(
-      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/,
-      "You're date needs to be in the following format: dd/mm/yy. Eg: 24/12/23",
-      {
-        excludeEmptyString: true,
-      }
-    )
+    .test({
+      name: 'custom',
+      test: function (value) {
+        const dateSelector = this.parent.dateSelector;
+
+        if (dateSelector === 'selected') {
+          return /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/.test(value);
+        }
+
+        return true; // Validation is not triggered if dateSelector is not 'selected'
+      },
+      message: 'Your date needs to be in the following format: dd/mm/yy. Eg: 24/12/23',
+    })
     .required('Start date is a required field.'),
   eventStartTime: Yup.string()
-    .matches(
-      /^(1[0-2]|0?[1-9]):([0-5][0-9]):([0-5][0-9])\s*(am|pm)$/i,
-      "You're time needs to be in the following format: hr/min/second/meridiem. Eg: 12:30:00pm",
-      { excludeEmptyString: true }
-    )
+    .test({
+      name: 'custom',
+      test: function (value) {
+        const dateSelector = this.parent.dateSelector;
+
+        if (dateSelector === 'selected') {
+          return /^(1[0-2]|0?[1-9]):([0-5][0-9]):([0-5][0-9])\s*(am|pm)$/i.test(value);
+        }
+
+        return true; // Validation is not triggered if timeSelector is not 'selected'
+      },
+      message: 'Your time needs to be in the following format: hr/min/second/meridiem. Eg: 12:30:00pm',
+    })
     .required('Start time is a required field.'),
   eventEndDate: Yup.string()
-    .matches(
-      /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/,
-      "You're date needs to be in the following format: dd/mm/yy. Eg: 24/12/23",
-      {
-        excludeEmptyString: true,
-      }
-    )
+    .test({
+      name: 'custom',
+      test: function (value) {
+        const dateSelector = this.parent.dateSelector;
+
+        if (dateSelector === 'selected') {
+          return /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/.test(value);
+        }
+
+        return true; // Validation is not triggered if dateSelector is not 'selected'
+      },
+      message: "You're date needs to be in the following format: dd/mm/yy. Eg: 24/12/23",
+    })
     .required('End date is a required field.'),
   eventEndTime: Yup.string()
-    .matches(
-      /^(1[0-2]|0?[1-9]):([0-5][0-9]):([0-5][0-9])\s*(am|pm)$/i,
-      "You're time needs to be in the following format: hr/min/second/meridiem. Eg: 12:30:00pm",
-      { excludeEmptyString: true }
-    )
+    .test({
+      name: 'custom',
+      test: function (value) {
+        const dateSelector = this.parent.dateSelector;
+
+        if (dateSelector === 'selected') {
+          return /^(1[0-2]|0?[1-9]):([0-5][0-9]):([0-5][0-9])\s*(am|pm)$/i.test(value);
+        }
+
+        return true; // Validation is not triggered if timeSelector is not 'selected'
+      },
+      message: "You're time needs to be in the following format: hr/min/second/meridiem. Eg: 12:30:00pm",
+    })
     .required('End time is a required field.'),
   eventStartTimeZone: Yup.string().required('Start time zone is a required field.').label('Start Time Zone'),
   eventEndTimeZone: Yup.string().required('End time zone is a required field.').label('End Time Zone'),
-  // reminderOneMethod: Yup.string().when('showCalendarId', {
-  //   is: true,
-  //   then: Yup.string().required('This is a required field.'),
-  // }),
-  // email: Yup.string().email('Invalid email address').required('Required'),
-  // acceptedTerms: Yup.boolean().required('Required').oneOf([true], 'You must accept the terms and conditions.'),
-  // jobType: Yup.string().oneOf(['designer', 'development', 'product', 'other'], 'Invalid Job Type').required('Required'),
 });
 
 const GoogleCalendarForm = () => {
@@ -76,6 +99,7 @@ const GoogleCalendarForm = () => {
     showCalendarId: false,
     calendarId: '',
     showReminders: false,
+    dateSelector: '',
     eventStartDate: '',
     eventStartTime: '',
     eventStartTimeZone: '',
@@ -116,7 +140,7 @@ const GoogleCalendarForm = () => {
           }, 400);
         }}
       >
-        {({ values, handleChange, setFieldValue }) => (
+        {({ values, setFieldValue }) => (
           <Form>
             <FrTextInput
               className={styles.frFormTextInput}
@@ -136,28 +160,7 @@ const GoogleCalendarForm = () => {
               multiline
               minRows={2}
             />
-            <DateInput
-              inputOneId="eventStartDate"
-              inputOneLabel="Start Date"
-              inputOneValue={values.eventStartDate}
-              inputTwoId="eventStartTime"
-              inputTwoLabel="Start Time"
-              inputTwoValue={values.eventStartTime}
-              selectId="eventStartTimeZone"
-              selectLabel="Start Time Zone"
-              selectValue={values.eventStartTimeZone}
-            />
-            <DateInput
-              inputOneId="eventEndDate"
-              inputOneLabel="End Date"
-              inputOneValue={values.eventEndDate}
-              inputTwoId="eventEndTime"
-              inputTwoLabel="End Time"
-              inputTwoValue={values.eventEndTime}
-              selectId="eventEndTimeZone"
-              selectLabel="End Time Zone"
-              selectValue={values.eventEndTimeZone}
-            />
+            <Dates value={values} />
             <Reminders
               showReminders={values.showReminders}
               setFieldValue={setFieldValue}

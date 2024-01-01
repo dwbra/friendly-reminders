@@ -16,15 +16,17 @@ const FrSelectInput = ({ data, label, ...props }) => {
         {...field}
         {...props}
       >
-        {data.length > 0
-          ? data.map((item, index) => {
-              return (
-                <MenuItem key={`${index}/${item}`} value={item.toLowerCase()}>
-                  {item}
-                </MenuItem>
-              );
-            })
-          : null}
+        {data.length > 0 ? (
+          data.map((item, index) => {
+            return (
+              <MenuItem key={`${index}/${item}`} value={item.toLowerCase()}>
+                {item}
+              </MenuItem>
+            );
+          })
+        ) : (
+          <div></div>
+        )}
       </TextField>
     </>
   );
