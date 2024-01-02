@@ -23,7 +23,14 @@ const Reminders = ({ option1, option2, showReminders, setFieldValue }) => {
               }}
             />
           }
-          label="Would you like to set custom reminder alerts for this event?"
+          label={
+            <>
+              <p>
+                Would you like to set <strong>custom</strong> reminder alerts for this event? We will automatically use
+                the default reminders if you do not choose to set custom ones.
+              </p>
+            </>
+          }
         />
       </div>
       {showReminders && (

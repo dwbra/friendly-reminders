@@ -17,15 +17,18 @@ const googleFormValidationSchema = Yup.object({
   calendarId: Yup.string().when('showCalendarId', {
     is: true,
     then: () => Yup.string().required('This is a required field.'),
+    otherwise: Yup.string().nullable(),
   }),
   showReminders: Yup.boolean(),
   reminderOneMethod: Yup.string().when('showReminders', {
     is: true,
     then: () => Yup.string().required('This is a required field.'),
+    otherwise: Yup.string().nullable(),
   }),
   reminderOneMinutes: Yup.string().when('showReminders', {
     is: true,
     then: () => Yup.string().required('This is a required field. Please enter a value between 0 and 40320 in minutes.'),
+    otherwise: Yup.string().nullable(),
   }),
   dateSelector: Yup.string().required('This is a required field.'),
   eventStartDate: Yup.string()
