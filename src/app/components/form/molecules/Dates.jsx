@@ -45,7 +45,7 @@ const Dates = ({ value }) => {
         </div>
       </Modal>
       <div className={styles.frFormDateWrapperQuestion}>
-        <h3>Do you want random dates or to select them yourself?</h3>
+        <h3>Do you want a random date or to select it yourself?</h3>
         <Tooltip
           title="Open info modal"
           onClick={() => {
