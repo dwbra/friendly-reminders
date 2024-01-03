@@ -25,7 +25,6 @@ const Dates = ({ value }) => {
             We will select a day from the current month. If that day has already past, it will be added to the following
             month.
           </p>
-          <p>By selecting random, an all day event will be created and added.</p>
           <p>
             <strong>Why would I want random?</strong> Well you may want to set a friendly reminder for you self to
             message a loved one a kind message. You want it to be a date in the future and to be totally random so that

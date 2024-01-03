@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from '../../../page.module.scss';
 import FrTextInput from '../atoms/FrTextInput';
 import FrSelectInput from '../atoms/FrSelectInput';

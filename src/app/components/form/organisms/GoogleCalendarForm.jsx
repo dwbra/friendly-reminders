@@ -7,7 +7,9 @@ import FrTextInput from '../atoms/FrTextInput';
 import CalendarId from '../molecules/CalendarId';
 import Dates from '../molecules/Dates';
 import Reminders from '../molecules/Reminders';
+import { randomiseDate } from '@/app/helpers/randomiseDate';
 
+// NB: Conditional validation requires the then to be a callback.
 const googleFormValidationSchema = Yup.object({
   eventTitle: Yup.string().min(3, 'Must be 3 characters or more').required('Event title is a required field.'),
   eventDescription: Yup.string().max(5000, 'Too many words. Please use a shorter description'),
@@ -120,6 +122,10 @@ const GoogleCalendarForm = () => {
         initialValues={googleFormInitialValues}
         validationSchema={googleFormValidationSchema}
         onSubmit={(values, { setSubmitting }) => {
+          if (values.dateSelector === 'random') {
+            const randomISODates = randomiseDate();
+            console.log(randomISODates);
+          }
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
@@ -152,11 +158,11 @@ const GoogleCalendarForm = () => {
               setFieldValue={setFieldValue}
               option1={{
                 method: { value: values.reminderOneMethod, label: 'Method', id: 'reminderOneMethod' },
-                minutes: { value: values.reminderOneMinutes, label: 'Minutes', id: 'reminderOneMinutes' },
+                minutes: { value: values.reminderOneMinutes, label: 'Minutes before event', id: 'reminderOneMinutes' },
               }}
               option2={{
                 method: { value: values.reminderTwoMethod, label: 'Method', id: 'reminderTwoMethod' },
-                minutes: { value: values.reminderTwoMinutes, label: 'Minutes', id: 'reminderTwoMinutes' },
+                minutes: { value: values.reminderTwoMinutes, label: 'Minutes before event', id: 'reminderTwoMinutes' },
               }}
             />
             <CalendarId values={values} showCalendarId={values.showCalendarId} setFieldValue={setFieldValue} />
