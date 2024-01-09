@@ -1,17 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(request) {
-  const {
-    accessToken,
-    calendarId = 'primary',
-    end,
-    start,
-    originalStartTime,
-    recurrence,
-    reminders,
-    summary,
-    description,
-  } = await request.json();
+  const { accessToken, calendarId, end, start, reminders, summary, description } = await request.json();
 
   const postEvent = async () => {
     try {

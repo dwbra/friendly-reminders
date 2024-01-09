@@ -7,7 +7,8 @@ import FrTextInput from '../atoms/FrTextInput';
 import CalendarId from '../molecules/CalendarId';
 import Dates from '../molecules/Dates';
 import Reminders from '../molecules/Reminders';
-import { randomiseDate } from '@/app/helpers/randomiseDate';
+import { useTokens } from '../../../context/FRContext';
+import formatGoogleCalendarData from '../../../helpers/formatGoogleCalendarData';
 
 // NB: Conditional validation requires the then to be a callback.
 const googleFormValidationSchema = Yup.object({
@@ -80,7 +81,31 @@ const googleFormValidationSchema = Yup.object({
   }),
 });
 
+const postEvent = async eventData => {
+  try {
+    const request = await fetch(`/api/googleCalendar`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ eventData }),
+    });
+
+    if (!request.ok) {
+      throw new Error(`Failed to POST event. Status: ${request.status}`);
+    } else {
+      const response = await request.json();
+      console.log(response);
+    }
+  } catch (error) {
+    console.error('Error during event POST:', error.message);
+    throw error;
+  }
+};
+
 const GoogleCalendarForm = () => {
+  const [tokens] = useTokens();
+
   const googleFormInitialValues = {
     eventTitle: '',
     eventDescription: '',
@@ -100,21 +125,6 @@ const GoogleCalendarForm = () => {
     reminderTwoMinutes: '',
   };
 
-  // const dataShape = {
-  //   summary: eventTitle,
-  //   calendarId,
-  //   end: { date: eventEndDate, dateTime: eventEndTime, timeZone: eventEndTimeZone },
-  //   start: { date: eventStartDate, dateTime: eventStartTime, timeZone: eventStartTimeZone },
-  //   description: eventDescription,
-  //   reminders: {
-  //     useDefault: false,
-  //     overrides: [
-  //       { method: 'email', minutes: 30 },
-  //       { method: 'popup', minutes: 10 },
-  //     ],
-  //   },
-  // };
-
   return (
     <div className={styles.frForm}>
       <h1>Add Events To Your Google Calendar</h1>
@@ -122,12 +132,15 @@ const GoogleCalendarForm = () => {
         initialValues={googleFormInitialValues}
         validationSchema={googleFormValidationSchema}
         onSubmit={(values, { setSubmitting }) => {
-          if (values.dateSelector === 'random') {
-            const randomISODates = randomiseDate();
-            console.log(randomISODates);
-          }
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+          const formattedData = formatGoogleCalendarData(values);
+
+          const postData = { ...formattedData, ...tokens };
+          console.log(postData);
+
+          setTimeout(async () => {
+            // alert(JSON.stringify(values, null, 2));
+            const posted = await postEvent(postData);
+            console.log(posted);
             setSubmitting(false);
           }, 400);
         }}
@@ -166,7 +179,7 @@ const GoogleCalendarForm = () => {
               }}
             />
             <CalendarId values={values} showCalendarId={values.showCalendarId} setFieldValue={setFieldValue} />
-            <Button variant="contained" type="submit">
+            <Button disabled={tokens.accessToken ? false : true} variant="contained" type="submit">
               Submit
             </Button>
           </Form>

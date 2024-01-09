@@ -1,7 +1,6 @@
 .main {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 6rem;
   min-height: 100vh;
 }
@@ -73,5 +72,11 @@
     width: 500px;
     padding: 20px;
     background-color: white;
+  }
+
+  &Auth {
+    p {
+      margin: 10px 0;
+    }
   }
 }

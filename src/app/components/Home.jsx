@@ -13,7 +13,7 @@ const Home = () => {
   });
 
   // Checking to see if a user has attempted an OAuth. If they have and the urls updated, set the code which will trigger
-  // the subsequent getTokens function all.
+  // the subsequent getTokens function call.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
