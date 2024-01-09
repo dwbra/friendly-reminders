@@ -82,13 +82,14 @@ const googleFormValidationSchema = Yup.object({
 });
 
 const postEvent = async eventData => {
+  console.log(eventData);
   try {
     const request = await fetch(`/api/googleCalendar`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ eventData }),
+      body: JSON.stringify({ ...eventData }),
     });
 
     if (!request.ok) {
@@ -96,6 +97,7 @@ const postEvent = async eventData => {
     } else {
       const response = await request.json();
       console.log(response);
+      return response;
     }
   } catch (error) {
     console.error('Error during event POST:', error.message);
@@ -131,18 +133,21 @@ const GoogleCalendarForm = () => {
       <Formik
         initialValues={googleFormInitialValues}
         validationSchema={googleFormValidationSchema}
-        onSubmit={(values, { setSubmitting }) => {
+        onSubmit={async (values, { setSubmitting }) => {
           const formattedData = formatGoogleCalendarData(values);
-
           const postData = { ...formattedData, ...tokens };
-          console.log(postData);
+          const posted = await postEvent(postData);
 
-          setTimeout(async () => {
-            // alert(JSON.stringify(values, null, 2));
-            const posted = await postEvent(postData);
-            console.log(posted);
-            setSubmitting(false);
-          }, 400);
+          if (posted) {
+            alert('Event has been added to your calendar.');
+          }
+
+          // setTimeout(async () => {
+          //   // alert(JSON.stringify(values, null, 2));
+          //   const posted = await postEvent(postData);
+          //   console.log(posted);
+          //   setSubmitting(false);
+          // }, 400);
         }}
       >
         {({ values, setFieldValue }) => (

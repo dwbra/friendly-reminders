@@ -5,24 +5,25 @@ export async function POST(request) {
 
   const postEvent = async () => {
     try {
-      const request = await fetch(`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          calendarId,
-          end,
-          start,
-          originalStartTime,
-          recurrence,
-          reminders,
-          summary,
-          description,
-        }),
-      });
+      const request = await fetch(
+        `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?key=${process.env.GOOGLE_API_KEY}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            calendarId,
+            end,
+            start,
+            reminders,
+            summary,
+            description,
+          }),
+        }
+      );
 
       if (!request.ok) {
         throw new Error(`HTTP error! Status: ${request.status}`);
