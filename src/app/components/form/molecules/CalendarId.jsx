@@ -5,9 +5,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
 const CalendarId = ({ values, showCalendarId, setFieldValue }) => {
-  // useEffect(() => {
-  //   console.log(values);
-  // });
   return (
     <>
       <div className={styles.frFormSwitch}>

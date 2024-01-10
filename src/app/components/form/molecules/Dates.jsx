@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import DateInput from '../atoms/FrDateInput';
+import FrTextInput from '../atoms/FrTextInput';
 import FrSelectInput from '../atoms/FrSelectInput';
 import styles from '../../../page.module.scss';
 
@@ -68,28 +68,36 @@ const Dates = ({ value }) => {
       {value.dateSelector === 'selected' ? (
         <>
           <p>Please fill in the fields below:</p>
-          <DateInput
-            inputOneId="eventStartDate"
-            inputOneLabel="Start Date"
-            inputOneValue={value.eventStartDate}
-            inputTwoId="eventStartTime"
-            inputTwoLabel="Start Time"
-            inputTwoValue={value.eventStartTime}
-            selectId="eventStartTimeZone"
-            selectLabel="Start Time Zone"
-            selectValue={value.eventStartTimeZone}
-          />
-          <DateInput
-            inputOneId="eventEndDate"
-            inputOneLabel="End Date"
-            inputOneValue={value.eventEndDate}
-            inputTwoId="eventEndTime"
-            inputTwoLabel="End Time"
-            inputTwoValue={value.eventEndTime}
-            selectId="eventEndTimeZone"
-            selectLabel="End Time Zone"
-            selectValue={value.eventEndTimeZone}
-          />
+          <div className={styles.frFormDate}>
+            <FrTextInput
+              className={styles.frFormTextInput}
+              id="eventStartDate"
+              name="eventStartDate"
+              label="Start Date"
+              value={value.eventStartDate}
+            />
+            <FrTextInput
+              className={styles.frFormTextInput}
+              id="eventStartTime"
+              name="eventStartDate"
+              label="Start Time"
+              value={value.eventStartTime}
+            />
+            <FrTextInput
+              className={styles.frFormTextInput}
+              id="eventEndDate"
+              name="eventEndDate"
+              label="End Date"
+              value={value.eventEndDate}
+            />
+            <FrTextInput
+              className={styles.frFormTextInput}
+              id="eventEndTime"
+              name="eventEndTime"
+              label="End Time"
+              value={value.eventEndTime}
+            />
+          </div>
         </>
       ) : null}
     </div>
