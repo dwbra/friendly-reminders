@@ -91,19 +91,8 @@ const GoogleCalendarForm = () => {
               multiline
               minRows={2}
             />
-            <Dates value={values} />
-            <Reminders
-              showReminders={values.showReminders}
-              setFieldValue={setFieldValue}
-              option1={{
-                method: { value: values.reminderOneMethod, label: 'Method', id: 'reminderOneMethod' },
-                minutes: { value: values.reminderOneMinutes, label: 'Minutes before event', id: 'reminderOneMinutes' },
-              }}
-              option2={{
-                method: { value: values.reminderTwoMethod, label: 'Method', id: 'reminderTwoMethod' },
-                minutes: { value: values.reminderTwoMinutes, label: 'Minutes before event', id: 'reminderTwoMinutes' },
-              }}
-            />
+            <Dates values={values} />
+            <Reminders values={values} showReminders={values.showReminders} setFieldValue={setFieldValue} />
             <CalendarId values={values} showCalendarId={values.showCalendarId} setFieldValue={setFieldValue} />
             <Button disabled={tokens.accessToken ? false : true} variant="contained" type="submit">
               Submit

@@ -4,7 +4,7 @@ import FrSelectInput from '../atoms/FrSelectInput';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
-const Reminders = ({ option1, option2, showReminders, setFieldValue }) => {
+const Reminders = ({ values, showReminders, setFieldValue }) => {
   return (
     <>
       <div className={styles.frFormSwitch}>
@@ -38,20 +38,20 @@ const Reminders = ({ option1, option2, showReminders, setFieldValue }) => {
             <FrSelectInput
               className={styles.frFormTextInput}
               disabled={!showReminders}
-              id={option1.method.id}
-              name={option1.method.id}
-              label={option1.method.label}
-              value={option1.method.value}
+              id="reminderOneMethod"
+              name="reminderOneMethod"
+              label="Method"
+              value={values.reminderOneMethod}
               fullWidth
               data={['Popup', 'Email']}
             />
             <FrTextInput
               className={styles.frFormTextInput}
               disabled={!showReminders}
-              id={option1.minutes.id}
-              name={option1.minutes.id}
-              label={option1.minutes.label}
-              value={option1.minutes.value}
+              id="reminderOneMinutes"
+              name="reminderOneMinutes"
+              label="Minutes before event"
+              value={values.reminderOneMinutes}
               fullWidth
             />
           </div>
@@ -60,20 +60,20 @@ const Reminders = ({ option1, option2, showReminders, setFieldValue }) => {
               <FrSelectInput
                 className={styles.frFormTextInput}
                 disabled={!showReminders}
-                id={option2.method.id}
-                name={option2.method.id}
-                label={option2.method.label}
-                value={option2.method.value}
+                id="reminderTwoMethod"
+                name="reminderTwoMethod"
+                label="Method"
+                value={values.reminderTwoMethod}
                 fullWidth
                 data={['Popup', 'Email']}
               />
               <FrTextInput
                 className={styles.frFormTextInput}
                 disabled={!showReminders}
-                id={option2.minutes.id}
-                name={option2.minutes.id}
-                label={option2.minutes.label}
-                value={option2.minutes.value}
+                id="reminderTwoMinutes"
+                name="reminderTwoMinutes"
+                label="Minutes before event"
+                value={values.reminderTwoMinutes}
                 fullWidth
               />
             </div>

@@ -10,7 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import Modal from '@mui/material/Modal';
 
-const Dates = ({ value }) => {
+const Dates = ({ values }) => {
   const [openModal, setOpenModal] = useState(false);
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -61,11 +61,11 @@ const Dates = ({ value }) => {
         id="dateSelector"
         name="dateSelector"
         label="Select your method"
-        value={value.dateSelector}
+        value={values.dateSelector}
         fullWidth
         data={['Random', 'Selected']}
       />
-      {value.dateSelector === 'selected' ? (
+      {values.dateSelector === 'selected' ? (
         <>
           <p>Please fill in the fields below:</p>
           <div className={styles.frFormDate}>
@@ -74,28 +74,28 @@ const Dates = ({ value }) => {
               id="eventStartDate"
               name="eventStartDate"
               label="Start Date"
-              value={value.eventStartDate}
+              value={values.eventStartDate}
             />
             <FrTextInput
               className={styles.frFormTextInput}
               id="eventStartTime"
               name="eventStartDate"
               label="Start Time"
-              value={value.eventStartTime}
+              value={values.eventStartTime}
             />
             <FrTextInput
               className={styles.frFormTextInput}
               id="eventEndDate"
               name="eventEndDate"
               label="End Date"
-              value={value.eventEndDate}
+              value={values.eventEndDate}
             />
             <FrTextInput
               className={styles.frFormTextInput}
               id="eventEndTime"
               name="eventEndTime"
               label="End Time"
-              value={value.eventEndTime}
+              value={values.eventEndTime}
             />
           </div>
         </>
