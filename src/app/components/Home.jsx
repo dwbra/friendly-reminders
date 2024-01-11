@@ -2,15 +2,11 @@
 import { useEffect, useState } from 'react';
 import AuthButton from './AuthButton';
 import GoogleCalendarForm from './form/organisms/GoogleCalendarForm';
-import { useTokens } from '../context/FRContext';
+import { useAuthentication } from '../context/FRContext';
 
 const Home = () => {
-  const [tokens, setTokens] = useTokens();
+  const [authentication, setAuthentication] = useAuthentication();
   const [code, setCode] = useState(null);
-
-  useEffect(() => {
-    console.log(tokens);
-  });
 
   // Checking to see if a user has attempted an OAuth. If they have and the urls updated, set the code which will trigger
   // the subsequent getTokens function call.
@@ -42,8 +38,8 @@ const Home = () => {
         if (!request.ok) {
           throw new Error(`Failed to exchange code for tokens. Status: ${request.status}`);
         } else {
-          const googleTokens = await request.json();
-          setTokens({ accessToken: googleTokens.access_token, refreshToken: googleTokens.refresh_token });
+          const response = await request.json();
+          setAuthentication(response);
         }
       } catch (error) {
         console.error('Error during token exchange:', error.message);
@@ -53,14 +49,14 @@ const Home = () => {
 
     // Only make the api call if a code exists in state.
     if (code !== null) {
-      // Grab tokens.
+      // Make API Call
       getTokens(code);
       // Clear browser of search params.
       window.history.replaceState(null, '', window.location.pathname);
       // Reset state to default.
       setCode(null);
     }
-  }, [code, setTokens]);
+  }, [code, setAuthentication]);
   return (
     <>
       <AuthButton />

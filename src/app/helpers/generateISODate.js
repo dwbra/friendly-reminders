@@ -1,7 +1,10 @@
+/**
+ * A helper function to create a valid ISO timestamp.
+ * @param {Object} data An object containing the date and time values from the form.
+ * @returns {String}
+ */
 export default function generateISODate(data) {
-  // Extracting date, dateTime, and timeZone from the input data
   const { date, dateTime } = data;
-
   const newDate = new Date();
 
   const day = date.split('/')[0];

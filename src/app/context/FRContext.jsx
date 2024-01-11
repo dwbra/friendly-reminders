@@ -5,17 +5,17 @@ import PropTypes from 'prop-types';
 const FRContext = createContext(null);
 
 const FRProvider = ({ children }) => {
-  const [tokens, updateTokens] = useState({
-    accessToken: null,
-    refreshToken: null,
+  const [authentication, setAuthentication] = useState({
+    message: null,
+    hasAccess: null,
   });
 
-  return <FRContext.Provider value={[tokens, updateTokens]}>{children}</FRContext.Provider>;
+  return <FRContext.Provider value={[authentication, setAuthentication]}>{children}</FRContext.Provider>;
 };
 
-const useTokens = () => useContext(FRContext);
+const useAuthentication = () => useContext(FRContext);
 
-export { FRProvider, useTokens };
+export { FRProvider, useAuthentication };
 
 FRProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,

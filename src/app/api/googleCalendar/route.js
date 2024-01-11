@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export async function POST(request) {
-  const { accessToken, calendarId, end, start, reminders, summary, description } = await request.json();
+  const cookieStore = cookies();
+  const tokens = cookieStore.get('tokens');
+  const accessToken = JSON.parse(tokens.value).accessToken;
+
+  const { calendarId, end, start, reminders, summary, description } = await request.json();
 
   const postEvent = async () => {
     try {
@@ -29,7 +34,7 @@ export async function POST(request) {
         throw new Error(`HTTP error! Status: ${request.status}`);
       } else {
         const response = await request.json();
-        return response.htmlLink;
+        return { message: 'Event successfully added to your calendar!', url: response.htmlLink, added: true };
       }
     } catch (error) {
       console.error('Error during POST request', error.message);
@@ -38,6 +43,5 @@ export async function POST(request) {
   };
 
   const event = await postEvent();
-  console.log(event);
   return NextResponse.json(event);
 }

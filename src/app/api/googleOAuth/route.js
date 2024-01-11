@@ -1,4 +1,6 @@
+'use server';
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export async function POST(request) {
   const { googleCode } = await request.json();
@@ -25,7 +27,16 @@ export async function POST(request) {
         throw new Error(`HTTP error! Status: ${request.status}`);
       } else {
         const tokens = await request.json();
-        return tokens;
+        cookies().set(
+          'tokens',
+          JSON.stringify({
+            accessToken: tokens.access_token,
+            refreshToken: tokens.refresh_token,
+            accessExpiry: tokens.expires_in,
+          }),
+          { httpOnly: true, sameSite: 'lax' }
+        );
+        return { message: 'Succesfully retrieved tokens.', hasAccess: true };
       }
     } catch (error) {
       console.error('Error during token exchange:', error.message);
@@ -34,6 +45,5 @@ export async function POST(request) {
   };
 
   const tokens = await tokenFetch();
-  //   console.log(tokens);
   return NextResponse.json(tokens);
 }

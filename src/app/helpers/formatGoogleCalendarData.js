@@ -7,8 +7,6 @@ import generateISODate from './generateISODate';
  * @returns {Object}
  */
 export default function formatGoogleCalendarData(formValues) {
-  //   console.log(formValues.eventStartDate);
-
   const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   let newStartDateTime = {};
@@ -50,27 +48,15 @@ export default function formatGoogleCalendarData(formValues) {
     return {
       summary: formValues.eventTitle,
       calendarId: alternativeCalendarId,
-      end: { dateTime: randomISODates.end, timeZone: 'Australia/Sydney' },
+      end: { dateTime: randomISODates.end, timeZone: userTimeZone },
       start: {
         dateTime: randomISODates.start,
-        timeZone: 'Australia/Sydney',
+        timeZone: userTimeZone,
       },
       description: formValues.eventDescription || '',
       reminders: calendarReminders,
     };
   }
-
-  console.log({
-    summary: formValues.eventTitle,
-    calendarId: alternativeCalendarId,
-    end: { dateTime: newEndDateTime, timeZone: userTimeZone },
-    start: {
-      dateTime: newStartDateTime,
-      timeZone: userTimeZone,
-    },
-    description: formValues.eventDescription || '',
-    reminders: calendarReminders,
-  });
 
   return {
     summary: formValues.eventTitle,
