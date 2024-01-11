@@ -68,7 +68,7 @@ const Dates = ({ values }) => {
             <FrTextInput
               className={styles.frFormTextInput}
               id="eventStartTime"
-              name="eventStartDate"
+              name="eventStartTime"
               label="Start Time"
               value={values.eventStartTime}
             />

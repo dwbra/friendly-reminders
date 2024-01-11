@@ -61,10 +61,10 @@ export default function formatGoogleCalendarData(formValues) {
   return {
     summary: formValues.eventTitle,
     calendarId: alternativeCalendarId,
-    end: { dateTime: newEndDateTime, timeZone: userTimeZone },
+    end: { dateTime: newEndDateTime, timeZone: 'UTC' },
     start: {
       dateTime: newStartDateTime,
-      timeZone: userTimeZone,
+      timeZone: 'UTC',
     },
     description: formValues.eventDescription || '',
     reminders: calendarReminders,
