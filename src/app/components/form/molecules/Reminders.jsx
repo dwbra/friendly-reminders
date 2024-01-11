@@ -15,10 +15,10 @@ const Reminders = ({ values, showReminders, setFieldValue }) => {
               checked={showReminders}
               onChange={() => {
                 setFieldValue('showReminders', !showReminders);
-                setFieldValue(option1.method.id, '');
-                setFieldValue(option1.minutes.id, '');
-                setFieldValue(option2.method.id, '');
-                setFieldValue(option2.minutes.id, '');
+                setFieldValue(values.reminderOneMethod, '');
+                setFieldValue(values.reminderOneMinutes, '');
+                setFieldValue(values.reminderTwoMethod, '');
+                setFieldValue(values.reminderTwoMinutes, '');
               }}
             />
           }
