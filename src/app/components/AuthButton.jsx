@@ -1,14 +1,14 @@
 'use client';
 import Button from '@mui/material/Button';
-import { useTokens } from '../context/FRContext';
+import { useAuthentication } from '../context/FRContext';
 import styles from '../page.module.scss';
 
 const AuthButton = () => {
-  const [tokens] = useTokens();
+  const [authentication] = useAuthentication();
 
   const grantPermissionsUrl = process.env.NEXT_PUBLIC_PERMISSIONS_URL;
 
-  return !tokens.accessToken ? (
+  return !authentication.hasAccess ? (
     <div className={styles.frAuth}>
       <p>You have to be signed in to submit the form and create an event.</p>
       <a href={grantPermissionsUrl}>

@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import styles from '../../../page.module.scss';
 import { Formik, Form } from 'formik';
 import Button from '@mui/material/Button';
@@ -6,10 +7,15 @@ import FrTextInput from '../atoms/FrTextInput';
 import CalendarId from '../molecules/CalendarId';
 import Dates from '../molecules/Dates';
 import Reminders from '../molecules/Reminders';
-import { useTokens } from '../../../context/FRContext';
+import { useAuthentication } from '../../../context/FRContext';
 import formatGoogleCalendarData from '../../../helpers/formatGoogleCalendarData';
 import { googleFormValidationSchema } from '../validation/calendarValidation';
+import FrModal from '../../../utils/FrModal';
 
+/**
+ * A frontend fetch call to the backend nodeJS API to create the event.
+ * @param {Object} eventData A formatted object containing the data.
+ */
 const postEvent = async eventData => {
   try {
     const request = await fetch(`/api/googleCalendar`, {
@@ -24,7 +30,6 @@ const postEvent = async eventData => {
       throw new Error(`Failed to POST event. Status: ${request.status}`);
     } else {
       const response = await request.json();
-      console.log(response);
       return response;
     }
   } catch (error) {
@@ -34,7 +39,10 @@ const postEvent = async eventData => {
 };
 
 const GoogleCalendarForm = () => {
-  const [tokens] = useTokens();
+  const [authentication] = useAuthentication();
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const googleFormInitialValues = {
     eventTitle: '',
@@ -55,17 +63,23 @@ const GoogleCalendarForm = () => {
 
   return (
     <div className={styles.frForm}>
+      <FrModal
+        open={openModal}
+        handleClose={handleCloseModal}
+        ariaLabel="sucessful form submission"
+        heading={`<h1>Your event was created!</h1>`}
+        description={`<p>You should now see the event in your google calendar.</p>`}
+      />
       <h1>Add Events To Your Google Calendar</h1>
       <Formik
         initialValues={googleFormInitialValues}
         validationSchema={googleFormValidationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           const formattedData = formatGoogleCalendarData(values);
-          const postData = { ...formattedData, ...tokens };
-          const posted = await postEvent(postData);
+          const submitEvent = await postEvent(formattedData);
 
-          if (posted) {
-            alert('Event has been added to your calendar.');
+          if (submitEvent.added) {
+            handleOpenModal();
           }
 
           setSubmitting(false);
@@ -94,7 +108,7 @@ const GoogleCalendarForm = () => {
             <Dates values={values} />
             <Reminders values={values} showReminders={values.showReminders} setFieldValue={setFieldValue} />
             <CalendarId values={values} showCalendarId={values.showCalendarId} setFieldValue={setFieldValue} />
-            <Button disabled={tokens.accessToken ? false : true} variant="contained" type="submit">
+            <Button disabled={authentication.hasAccess ? false : true} variant="contained" type="submit">
               Submit
             </Button>
           </Form>
