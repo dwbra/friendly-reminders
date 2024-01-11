@@ -31,7 +31,7 @@ NEXT_PUBLIC_PERMISSIONS_URL="https://accounts.google.com/o/oauth2/v2/auth?scope=
 GOOGLE_API_KEY="XYZ"
 ```
 
-Always happy to answer any questions! Just shoot me a message.
+Happy coding!
 
 Thanks,
 Daniel
