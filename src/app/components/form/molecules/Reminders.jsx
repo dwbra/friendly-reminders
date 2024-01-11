@@ -15,10 +15,10 @@ const Reminders = ({ values, showReminders, setFieldValue }) => {
               checked={showReminders}
               onChange={() => {
                 setFieldValue('showReminders', !showReminders);
-                setFieldValue(values.reminderOneMethod, '');
-                setFieldValue(values.reminderOneMinutes, '');
-                setFieldValue(values.reminderTwoMethod, '');
-                setFieldValue(values.reminderTwoMinutes, '');
+                setFieldValue('reminderOneMethod', '');
+                setFieldValue('reminderOneMinutes', '');
+                setFieldValue('reminderTwoMethod', '');
+                setFieldValue('reminderTwoMinutes', '');
               }}
             />
           }
@@ -55,29 +55,27 @@ const Reminders = ({ values, showReminders, setFieldValue }) => {
               fullWidth
             />
           </div>
-          {option2.method.id && (
-            <div>
-              <FrSelectInput
-                className={styles.frFormTextInput}
-                disabled={!showReminders}
-                id="reminderTwoMethod"
-                name="reminderTwoMethod"
-                label="Method"
-                value={values.reminderTwoMethod}
-                fullWidth
-                data={['Popup', 'Email']}
-              />
-              <FrTextInput
-                className={styles.frFormTextInput}
-                disabled={!showReminders}
-                id="reminderTwoMinutes"
-                name="reminderTwoMinutes"
-                label="Minutes before event"
-                value={values.reminderTwoMinutes}
-                fullWidth
-              />
-            </div>
-          )}
+          <div>
+            <FrSelectInput
+              className={styles.frFormTextInput}
+              disabled={!showReminders}
+              id="reminderTwoMethod"
+              name="reminderTwoMethod"
+              label="Method"
+              value={values.reminderTwoMethod}
+              fullWidth
+              data={['Popup', 'Email']}
+            />
+            <FrTextInput
+              className={styles.frFormTextInput}
+              disabled={!showReminders}
+              id="reminderTwoMinutes"
+              name="reminderTwoMinutes"
+              label="Minutes before event"
+              value={values.reminderTwoMinutes}
+              fullWidth
+            />
+          </div>
         </div>
       )}
     </>
